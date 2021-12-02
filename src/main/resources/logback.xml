@@ -1,0 +1,14 @@
+<configuration>
+
+  <!--  This appender is just for local development and for shippr project logs command-->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d %-5p %-6X{requestId} %c - %m%xEx%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="error">
+    <appender-ref ref="STDOUT" />
+  </root>
+
+</configuration>
