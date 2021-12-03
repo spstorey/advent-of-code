@@ -1,4 +1,4 @@
-package main.groovy.aoc2021.day1
+package aoc2021.day1
 
 File file = new File("input")
 List<String> lines = file.readLines()
