@@ -1,27 +1,60 @@
 package aoc2021.day4
 
+import java.util.stream.Collectors
+
 File file = new File("input")
 List<String> lines = file.readLines()
 
-Integer width = lines.get(0).length()
+List<Integer> draw = Arrays.stream(lines.get(0).split(","))
+        .map(Integer::parseInt).collect(Collectors.toList())
 
-int[] totals = new int[width]
+List<Book> books = new ArrayList();
+
+Book book = null
 for (String line : lines) {
-    for (int i = 0; i < width; i++) {
-        totals[i] += Integer.parseInt(line.charAt(i) as String)
+    if (line.size() < 50) {
+        if (line == "") {
+            if (book != null) {
+                book.complete()
+                books.add(book)
+            }
+            book = new Book();
+        } else {
+            book.add(line)
+        }
+    }
+}
+book.complete()
+books.add(book)
+
+int result
+for (Integer nextDraw : draw) {
+    result = markBook(books, nextDraw)
+    if (result != 0) {
+        println result * nextDraw
+        break
     }
 }
 
-String gammaRate = ""
-String epsilonRate = ""
-for (int i = 0; i < totals.length; i++) {
-    if (totals[i] >= (lines.size()/2)) {
-        gammaRate = gammaRate + "1"
-        epsilonRate = epsilonRate + "0"
-    } else {
-        gammaRate = gammaRate + "0"
-        epsilonRate = epsilonRate + "1"
+println "Hello"
+
+int markBook(List<Book> books, Integer nextDraw) {
+    for (Book book : books) {
+        for (List<Integer> line : book.getLines()) {
+            line.removeElement(nextDraw)
+            if (line.size() == 0) {
+                return remainingNumbers(book)
+            }
+        }
     }
+    return 0
 }
 
-print Integer.parseInt(gammaRate,2) * Integer.parseInt(epsilonRate,2)
+int remainingNumbers(Book book) {
+    int total = 0;
+    for (int i = 0; i < 5; i++) {
+        total += book.getLines().get(i).stream().reduce(0, Integer::sum)
+    }
+
+    return total
+}

@@ -1,4 +1,6 @@
-package aoc2021.day4
+package aoc2021.day5
+
+import aoc2021.day4.Book
 
 import java.util.stream.Collectors
 
