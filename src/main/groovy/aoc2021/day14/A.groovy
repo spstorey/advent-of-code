@@ -1,4 +1,4 @@
-package aoc2021.day13
+package aoc2021.day14
 
 File file = new File("input")
 List<String> inputLines = file.readLines()
